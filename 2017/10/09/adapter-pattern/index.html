@@ -104,7 +104,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://youngtr.github.io/images/adpter-pattern-relative.png">
 <meta property="og:image" content="https://youngtr.github.io/images/adapter-pattern-uml.png">
-<meta property="og:updated_time" content="2017-10-10T10:21:26.876Z">
+<meta property="og:updated_time" content="2017-10-10T10:55:00.881Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="适配器模式">
 <meta name="twitter:description" content="1. 模式动机假如你需要在欧洲国家使用美国制造的笔记本电脑，你可能需要使用一个交流电的适配器。它的作用就是将欧式插座转换成美式插座，好让美式插头可以插进这个插座得到电力——将一个接口转换成另一个接口，以符合客户的需求。 2. 模式解析 客户使用适配器的过程如下：  客户通过目标接口调用适配器的方法对适配器发出请求。 适配器使用被适配者接口把请求转换成被适配者的一个或多个调用接口。 客户接收到调用的">
@@ -374,17 +374,42 @@
 <li>客户接收到调用的结果，但并未察觉这一切是适配器在起转换作用。（客户和被适配者是解耦的，一个不知道另一个。）</li>
 </ol>
 <h3 id="3-模式定义"><a href="#3-模式定义" class="headerlink" title="3. 模式定义"></a>3. 模式定义</h3><p><strong>适配器模式</strong>将一个类的接口，转换成客户期望的另一个接口。适配器让原来接口不兼容的类可以合作无间。</p>
-<h3 id="4-模式结构"><a href="#4-模式结构" class="headerlink" title="4. 模式结构"></a>4. 模式结构</h3><p>适配器模式包括如下角色：</p>
-<ul>
+<h3 id="4-模式结构"><a href="#4-模式结构" class="headerlink" title="4. 模式结构"></a>4. 模式结构</h3><h4 id="4-1-适配器模式包括如下角色："><a href="#4-1-适配器模式包括如下角色：" class="headerlink" title="4.1 适配器模式包括如下角色："></a>4.1 适配器模式包括如下角色：</h4><ul>
 <li>Target：期待得到的接口</li>
 <li>Adapee：需要适配的接口</li>
 <li>Adapter：适配器类，核心</li>
 <li>Client：客户</li>
 </ul>
-<p>UML 图</p>
-<p><img src="/images/adapter-pattern-uml.png" alt="UML"></p>
+<h4 id="4-2-UML-图"><a href="#4-2-UML-图" class="headerlink" title="4.2 UML 图"></a>4.2 UML 图</h4><p><img src="/images/adapter-pattern-uml.png" alt="UML"></p>
 <p>良好的OO设计原则：使用对象组合，以修改的接口包装被适配者，这样被适配者的任何子类，都可以搭配着适配器使用。</p>
-
+<h4 id="4-3-代码分析"><a href="#4-3-代码分析" class="headerlink" title="4.3 代码分析"></a>4.3 代码分析</h4><ul>
+<li>鸭子接口</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public interface Duck &#123;</div><div class="line">    void quack();</div><div class="line"></div><div class="line">    void fly();</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>绿头鸭是鸭子的子类</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public class MallardDuck implements Duck &#123;</div><div class="line">    @Override</div><div class="line">    public void quack() &#123;</div><div class="line">        Log.d(LOG_TAG, &quot;Quack&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void fly() &#123;</div><div class="line">        Log.d(LOG_TAG, &quot;I&apos;m flying&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>Turkey 接口</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public interface Turkey &#123;</div><div class="line">    void gobble();</div><div class="line"></div><div class="line">    void fly();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>Turkey 接口的一个具体实现</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public class WildTurkey implements Turkey &#123;</div><div class="line">    @Override</div><div class="line">    public void gobble() &#123;</div><div class="line">        Log.d(LOG_TAG, &quot;Gobble gobble&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void fly() &#123;</div><div class="line">        Log.d(LOG_TAG, &quot;I&apos;m flying a short distance&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>TurkeyAdapter</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">public class TurkeyAdapter implements Duck &#123;</div><div class="line"></div><div class="line">    private Turkey turkey;</div><div class="line"></div><div class="line">    public TurkeyAdapter(Turkey turkey) &#123;</div><div class="line">        this.turkey = turkey;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void quack() &#123;</div><div class="line">        turkey.gobble();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void fly() &#123;</div><div class="line">        turkey.fly();</div><div class="line">        turkey.fly();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>客户端</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">WildTurkey wildTurkey = new WildTurkey();</div><div class="line">     wildTurkey.gobble();</div><div class="line">     wildTurkey.fly();</div><div class="line">     Duck turkeyAdapter = new TurkeyAdapter(wildTurkey);</div><div class="line">     turkeyAdapter.quack();</div><div class="line">     turkeyAdapter.fly();</div></pre></td></tr></table></figure>
+<ul>
+<li>输出</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">The turkey say...</div><div class="line">Gobble gobble</div><div class="line">I&apos;m flying a short distance</div><div class="line">The duck say...</div><div class="line">Gobble gobble</div><div class="line">I&apos;m flying a short distance</div><div class="line">I&apos;m flying a short distance</div></pre></td></tr></table></figure>
       
     </div>
     
@@ -560,7 +585,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-模式动机"><span class="nav-number">1.</span> <span class="nav-text">1. 模式动机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-模式解析"><span class="nav-number">2.</span> <span class="nav-text">2. 模式解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-模式定义"><span class="nav-number">3.</span> <span class="nav-text">3. 模式定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-模式结构"><span class="nav-number">4.</span> <span class="nav-text">4. 模式结构</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-模式动机"><span class="nav-number">1.</span> <span class="nav-text">1. 模式动机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-模式解析"><span class="nav-number">2.</span> <span class="nav-text">2. 模式解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-模式定义"><span class="nav-number">3.</span> <span class="nav-text">3. 模式定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-模式结构"><span class="nav-number">4.</span> <span class="nav-text">4. 模式结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-适配器模式包括如下角色："><span class="nav-number">4.1.</span> <span class="nav-text">4.1 适配器模式包括如下角色：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-UML-图"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 UML 图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-代码分析"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 代码分析</span></a></li></ol></li></ol></div>
             
 
           </div>
