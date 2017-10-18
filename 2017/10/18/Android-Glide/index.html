@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="YoungTr">
 <meta property="og:description" content="Github 地址 https://github.com/bumptech/glide 中文文档 https://muyangmin.github.io/glide-docs-cn/ 1. 基本用法Gradle 123456789repositories &amp;#123;  mavenCentral()  maven &amp;#123; url &amp;apos;https://maven.google.com&amp;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-18T10:53:59.579Z">
+<meta property="og:updated_time" content="2017-10-18T11:09:11.988Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Androidt图片加载框架Glide">
 <meta name="twitter:description" content="Github 地址 https://github.com/bumptech/glide 中文文档 https://muyangmin.github.io/glide-docs-cn/ 1. 基本用法Gradle 123456789repositories &amp;#123;  mavenCentral()  maven &amp;#123; url &amp;apos;https://maven.google.com&amp;">
@@ -373,7 +373,7 @@
 <p>在 Application 模块中包含一个 AppGlideModule 的实现：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">@GlideModule</div><div class="line">public final class MyAppGlideModule extends AppGlideModule &#123;&#125;</div></pre></td></tr></table></figure>
 <p><strong>使用 Generated API</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">GlideApp.with(this)</div><div class="line">               .asBitmap() //指定图片格式 link asGif() asDrawable()</div><div class="line">               .load(IMAGE_URL)</div><div class="line">               .placeholder(R.drawable.loading)//loading 占位符</div><div class="line">               .error(R.drawable.error)        //error 占位符</div><div class="line">               .diskCacheStrategy(DiskCacheStrategy.NONE)//禁用缓存功能</div><div class="line">               .override(200, 200)  //指定大小</div><div class="line">               .into(mImageView);</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">GlideApp.with(this)</div><div class="line">               .asBitmap() //指定图片格式 link asGif() asDrawable()</div><div class="line">               .load(IMAGE_URL)</div><div class="line">               .placeholder(R.drawable.loading)//loading 占位符</div><div class="line">               .error(R.drawable.error)        //error 占位符</div><div class="line">               .diskCacheStrategy(DiskCacheStrategy.NONE)//禁用缓存功能</div><div class="line">               .override(200, 200)  //指定大小</div><div class="line">               .centerCrop() //裁剪方式  link centerInside() fitCenter()</div><div class="line">               .into(mImageView);</div></pre></td></tr></table></figure>
       
     </div>
     
