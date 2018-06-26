@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="工作记录," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="1. [android]在 Html.fromHtml 中的换行被忽略使用”&amp;lt;br&amp;gt;”标签 1&amp;lt;font size=&amp;quot;3&amp;quot; color=&amp;quot;black&amp;quot;&amp;gt;&amp;quot; + message + &amp;quot;&amp;lt;/font&amp;gt;&amp;lt;br&amp;gt; 2. Android使用HttpURLConnection编程遇到的302重定向问题接">
+<meta name="keywords" content="工作记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="工作记录">
+<meta property="og:url" content="https://youngtr.github.io/2017/10/16/Work-Record/index.html">
+<meta property="og:site_name" content="YoungTr">
+<meta property="og:description" content="1. [android]在 Html.fromHtml 中的换行被忽略使用”&amp;lt;br&amp;gt;”标签 1&amp;lt;font size=&amp;quot;3&amp;quot; color=&amp;quot;black&amp;quot;&amp;gt;&amp;quot; + message + &amp;quot;&amp;lt;/font&amp;gt;&amp;lt;br&amp;gt; 2. Android使用HttpURLConnection编程遇到的302重定向问题接">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-06-05T04:57:32.978Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="工作记录">
+<meta name="twitter:description" content="1. [android]在 Html.fromHtml 中的换行被忽略使用”&amp;lt;br&amp;gt;”标签 1&amp;lt;font size=&amp;quot;3&amp;quot; color=&amp;quot;black&amp;quot;&amp;gt;&amp;quot; + message + &amp;quot;&amp;lt;/font&amp;gt;&amp;lt;br&amp;gt; 2. Android使用HttpURLConnection编程遇到的302重定向问题接">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://youngtr.github.io/2017/10/16/Work-Record/"/>
+
+
+
+
+
+  <title>工作记录 | YoungTr</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YoungTr</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://youngtr.github.io/2017/10/16/Work-Record/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YoungTr">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoungTr">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">工作记录</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-16T17:34:22+08:00">
+                2017-10-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/工作记录/" itemprop="url" rel="index">
+                    <span itemprop="name">工作记录</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="1-android-在-Html-fromHtml-中的换行被忽略"><a href="#1-android-在-Html-fromHtml-中的换行被忽略" class="headerlink" title="1. [android]在 Html.fromHtml 中的换行被忽略"></a>1. [android]在 Html.fromHtml 中的换行被忽略</h3><p>使用”&lt;br&gt;”标签</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;font size=&quot;3&quot; color=&quot;black&quot;&gt;&quot; + message + &quot;&lt;/font&gt;&lt;br&gt;</div></pre></td></tr></table></figure>
+<h3 id="2-Android使用HttpURLConnection编程遇到的302重定向问题"><a href="#2-Android使用HttpURLConnection编程遇到的302重定向问题" class="headerlink" title="2. Android使用HttpURLConnection编程遇到的302重定向问题"></a>2. Android使用HttpURLConnection编程遇到的302重定向问题</h3><p>接管重定向过程，直接调用HttpURLConnection的setInstanceFollowRedirects(false)，传入参数为false，然后递归的方式进行http请求，然后从header参数中取出location字段。</p>
+<p><a href="http://vjson.com/wordpress/android%E8%8E%B7%E5%8F%96url%E9%87%8D%E5%AE%9A%E5%90%91%E4%B9%8B%E5%90%8E%E7%9A%84%E5%9C%B0%E5%9D%80.html" title="获取url重定向之后的地址" target="_blank" rel="external">获取url重定向之后的地址</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line">public String recursiveTracePath(String path, String reffer) &#123;</div><div class="line">	String realURL = null;</div><div class="line">	if (mStackDeep.getAndDecrement() &gt; 0) &#123;// 避免异常递归导致StackOverflowError</div><div class="line">		URL url = null;</div><div class="line">		HttpURLConnection conn = null;</div><div class="line">		try &#123;</div><div class="line">			url = new URL(path);</div><div class="line">			conn = (HttpURLConnection) url.openConnection();</div><div class="line"></div><div class="line">			conn.setRequestProperty(&quot;User-Agent&quot;, DEFAULT_USER_AGENT_PHONE);</div><div class="line">			conn.setConnectTimeout(30000);</div><div class="line">			conn.setReadTimeout(30000);</div><div class="line">			conn.setInstanceFollowRedirects(false);</div><div class="line">			int code = conn.getResponseCode();// network block</div><div class="line">			if (needRedirect(code)) &#123;</div><div class="line">         //临时重定向和永久重定向location的大小写有区分</div><div class="line">				String location = conn.getHeaderField(&quot;Location&quot;);</div><div class="line">				if (location == null) &#123;</div><div class="line">					location = conn.getHeaderField(&quot;location&quot;);</div><div class="line">				&#125;</div><div class="line"></div><div class="line">				if (!(location.startsWith(&quot;http://&quot;) || location</div><div class="line">						.startsWith(&quot;https://&quot;))) &#123;</div><div class="line">         //某些时候会省略host，只返回后面的path，所以需要补全url</div><div class="line">					URL origionUrl = new URL(path);</div><div class="line">					location = origionUrl.getProtocol() + &quot;://&quot;</div><div class="line">							+ origionUrl.getHost() + location;</div><div class="line">				&#125;</div><div class="line"></div><div class="line">				return recursiveTracePath(location, path);</div><div class="line">			&#125; else &#123;</div><div class="line">				// redirect finish.</div><div class="line">				realURL = path;</div><div class="line">			&#125;</div><div class="line"></div><div class="line">		&#125; catch (MalformedURLException e) &#123;</div><div class="line">			Log.w(TAG, &quot;recursiveTracePath MalformedURLException&quot;);</div><div class="line">		&#125; catch (IOException e) &#123;</div><div class="line">			Log.w(TAG, &quot;recursiveTracePath IOException&quot;);</div><div class="line">		&#125; catch (Exception e) &#123;</div><div class="line">			Log.w(TAG, &quot;unknow exception&quot;);</div><div class="line">		&#125; finally &#123;</div><div class="line">			if (conn != null) &#123;</div><div class="line">				conn.disconnect();</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	return realURL;</div><div class="line">&#125;</div><div class="line"></div><div class="line">private boolean needRedirect(int code) &#123;</div><div class="line">	return (code == HttpStatus.SC_MOVED_PERMANENTLY</div><div class="line">			|| code == HttpStatus.SC_MOVED_TEMPORARILY</div><div class="line">			|| code == HttpStatus.SC_SEE_OTHER || code == HttpStatus.SC_TEMPORARY_REDIRECT);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/工作记录/" rel="tag"># 工作记录</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/16/template-method/" rel="next" title="模板方法">
+                <i class="fa fa-chevron-left"></i> 模板方法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/17/proxy-pattern/" rel="prev" title="代理模式">
+                代理模式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="YoungTr" />
+          <p class="site-author-name" itemprop="name">YoungTr</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-android-在-Html-fromHtml-中的换行被忽略"><span class="nav-number">1.</span> <span class="nav-text">1. [android]在 Html.fromHtml 中的换行被忽略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Android使用HttpURLConnection编程遇到的302重定向问题"><span class="nav-number">2.</span> <span class="nav-text">2. Android使用HttpURLConnection编程遇到的302重定向问题</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">YoungTr</span>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

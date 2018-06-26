@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android,Gradle," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="当开发应用程序时，通常有几个不同的版本。最常见的情况是，具有用于测试应用程序的测试版本，以及生产版本。通常，这些不同的版本有不同的设置信息，比如测试 URL 可能与生产环境的不同。 构建类型（Build types）在 Gradle 的 Android 插件中，构建类型用于定义应该如何构建应用程序或库。每个构建类型都可以指定是否应该包括调试符号，应用程序ID必须是什么，是否应该删除未使用的资源，等">
+<meta name="keywords" content="Android,Gradle">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Gradle for Android-4.创建构建变体(Creating Build Variants)">
+<meta property="og:url" content="https://youngtr.github.io/2017/10/31/Gradle-for-Android-4-Creating-Build-Variants/index.html">
+<meta property="og:site_name" content="YoungTr">
+<meta property="og:description" content="当开发应用程序时，通常有几个不同的版本。最常见的情况是，具有用于测试应用程序的测试版本，以及生产版本。通常，这些不同的版本有不同的设置信息，比如测试 URL 可能与生产环境的不同。 构建类型（Build types）在 Gradle 的 Android 插件中，构建类型用于定义应该如何构建应用程序或库。每个构建类型都可以指定是否应该包括调试符号，应用程序ID必须是什么，是否应该删除未使用的资源，等">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://youngtr.github.io/images/gradle-source-set.png">
+<meta property="og:image" content="https://youngtr.github.io/images/gradle-file-merge.png">
+<meta property="og:updated_time" content="2018-06-05T04:57:32.967Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Gradle for Android-4.创建构建变体(Creating Build Variants)">
+<meta name="twitter:description" content="当开发应用程序时，通常有几个不同的版本。最常见的情况是，具有用于测试应用程序的测试版本，以及生产版本。通常，这些不同的版本有不同的设置信息，比如测试 URL 可能与生产环境的不同。 构建类型（Build types）在 Gradle 的 Android 插件中，构建类型用于定义应该如何构建应用程序或库。每个构建类型都可以指定是否应该包括调试符号，应用程序ID必须是什么，是否应该删除未使用的资源，等">
+<meta name="twitter:image" content="https://youngtr.github.io/images/gradle-source-set.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://youngtr.github.io/2017/10/31/Gradle-for-Android-4-Creating-Build-Variants/"/>
+
+
+
+
+
+  <title>Gradle for Android-4.创建构建变体(Creating Build Variants) | YoungTr</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YoungTr</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://youngtr.github.io/2017/10/31/Gradle-for-Android-4-Creating-Build-Variants/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YoungTr">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoungTr">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Gradle for Android-4.创建构建变体(Creating Build Variants)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-31T13:51:42+08:00">
+                2017-10-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Gradle/" itemprop="url" rel="index">
+                    <span itemprop="name">Gradle</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>当开发应用程序时，通常有几个不同的版本。最常见的情况是，具有用于测试应用程序的测试版本，以及生产版本。通常，这些不同的版本有不同的设置信息，比如测试 URL 可能与生产环境的不同。</p>
+<h3 id="构建类型（Build-types）"><a href="#构建类型（Build-types）" class="headerlink" title="构建类型（Build types）"></a>构建类型（Build types）</h3><p>在 Gradle 的 Android 插件中，构建类型用于定义应该如何构建应用程序或库。每个构建类型都可以指定是否应该包括调试符号，应用程序ID必须是什么，是否应该删除未使用的资源，等等。可以在buildTypes块中定义构建类型：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    buildTypes &#123;</div><div class="line">        release &#123;</div><div class="line">            minifyEnabled false</div><div class="line">			proguardFiles getDefaultProguardFile(&apos;proguard-android.txt&apos;), &apos;proguard-rules.pro&apos;</div><div class="line">        &#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>新模块的默认build.gradle文件会构建一个名为release的构建类型。此构建类型不仅禁用删除未使用的资源（通过将minifyEnabled设置为false）并定义默认 ProGuard 配置文件的位置。</p>
+<p>发布构建类型(release build)不是为项目创建的唯一构建类型。默认情况下，每个模块都有一个调试类型（debug build）。它设置为明确的默认值，但可以通过将其包含在 buildTypes 块中来更改其配置，并覆盖要更改的属性。</p>
+<h3 id="创建构建类型"><a href="#创建构建类型" class="headerlink" title="创建构建类型"></a>创建构建类型</h3><p>可以在 buildTypes 块中创建一个新的 build type：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    buildTypes &#123;</div><div class="line">        staging&#123;</div><div class="line">            applicationIdSuffix &quot;.staging&quot;</div><div class="line">            versionNameSuffix &quot;-staging&quot;</div><div class="line">            buildConfigField &quot;String&quot;, &quot;API_URL&quot;, &quot;\&quot;http://staging.example.com/api\&quot;&quot;</div><div class="line">        &#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>分段构建类型(staging build type)为应用程序ID设置了一个新的后缀，使其与调试和发行版本的应用程序ID不同。假设具有默认构建配置，加上分段构建类型，构建类型的应用程序ID如下所示：</p>
+<ul>
+<li><strong>Debug:</strong> com.package</li>
+<li><strong>Release:</strong> com.pacakge</li>
+<li><strong>Staging：</strong> com.package.staging</li>
+</ul>
+<p>这意味着能够在同一设备上同时安装分段版本和发行版本，而不会引起任何冲突。分段构建类型还具有版本名称后缀，可用于区分同一设备上的多个应用程序版本。</p>
+<p>创建新的构建类型时，并不总是从头开始,可以初始化复制另一个构建类型的属性:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    buildTypes &#123;</div><div class="line">        staging.initWith(buildTypes.debug)</div><div class="line">        staging&#123;</div><div class="line">            applicationIdSuffix &quot;.staging&quot;</div><div class="line">            versionNameSuffix &quot;-staging&quot;</div><div class="line">            buildConfigField &quot;String&quot;, &quot;API_URL&quot;, &quot;\&quot;http://staging.example.com/api\&quot;&quot;</div><div class="line">        &#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>initWith() 方法创建一个新的构建类型，并将所有属性从现有构建类型复制到新创建的类型。通过在新的构建类型对象中简单地将它们定义，可以覆盖属性或定义额外的属性。</p>
+<h3 id="资源集合（Source-sets）"><a href="#资源集合（Source-sets）" class="headerlink" title="资源集合（Source sets）"></a>资源集合（Source sets）</h3><p>当创建一个新的构建类型，Gradle 会创建一个新的资源集合（source set）。</p>
+<p>默认情况下，源集目录被假定为具有与构建类型相同的名称。 当定义新的构建类型时，该目录不会自动创建，必须自己收到创建，然后才能使用构建类型自定义的源代码和资源。</p>
+<p><img src="/images/gradle-source-set.png" alt="source-set"></p>
+<p>这样就可以覆盖特定构建类型的某些属性，将自定义代码添加到某些构建类型，并将自定义布局或字符串添加到不同的构建类型。</p>
+<p>资源在使用不同的源集合时以特殊方式处理。Drawables 和布局文件将完全覆盖主源集中具有相同名称的资源，但是value目录中的文件（如strings.xml）则不会。Gradle 会将构建类型资源的内容与主要资源合并。</p>
+<p>main source set，strings.xml:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;resources&gt;</div><div class="line">	&lt;string name=&quot;app_name&quot;&gt;TypesAndFlavors&lt;/string&gt;</div><div class="line">	&lt;string name=&quot;hello_world&quot;&gt;Hello world!&lt;/string&gt;</div><div class="line">&lt;/resources&gt;</div></pre></td></tr></table></figure>
+<p>staging build type source set,strings.xml:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;resources&gt;</div><div class="line">    &lt;string name=&quot;app_name&quot;&gt;TypesAndFlavors&lt;/string&gt;</div><div class="line">&lt;/resources&gt;</div></pre></td></tr></table></figure>
+<p>合并的strings.xml文件将会像这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;resources&gt;</div><div class="line">	&lt;string name=&quot;app_name&quot;&gt;TypesAndFlavors STAGING&lt;/string&gt;</div><div class="line">	&lt;string name=&quot;hello_world&quot;&gt;Hello world!&lt;/string&gt;</div><div class="line">&lt;/resources&gt;</div></pre></td></tr></table></figure>
+<p>当构建不是暂存的构建类型时，最终的strings.xml文件将只是来自主源集的strings.xml文件。</p>
+<p>清单文件(manifest file)也是这样，如果为构建类型创建清单文件，不需要将整个清单文件从主源集中复制，只需添加所需的标签即可。Android插件会将清单文件合并在一起。</p>
+<h3 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h3><p>每种构建类型都可以有自己的依赖关系。Gradle自动为每种构建类型创建新的依赖关系配置。例如，如果只在调试版本要添加日志框架，，可以这样做：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">dependencies &#123;</div><div class="line">	compile fileTree(dir: &apos;libs&apos;, include: [&apos;*.jar&apos;])</div><div class="line">	compile &apos;com.android.support:appcompat-v7:22.2.0&apos;</div><div class="line">	debugCompile &apos;de.mindpipe.android:android-logging-log4j:1.0.3&apos;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Product-ﬂavors-产品风格"><a href="#Product-ﬂavors-产品风格" class="headerlink" title="Product ﬂavors 产品风格"></a>Product ﬂavors 产品风格</h3><p>与用于配置相同应用程序或库的多个不同构建的构建类型相反，产品风格被用于创建不同版本的同一个应用程序。典型的例子是一个有免费和付费版本的应用程序。另一个常见的情况是，一个代理商可以为几个客户端构建具有相同功能的应用程序，其中只有品牌信息改变。这在出租车行业或银行应用程序中非常常见，其中一家公司创建了可以针对同一类别的所有客户端重复使用的应用程序。唯一改变的是主要的颜色，标志和后端的URL。产品风格（product flavors）大大简化了基于相同代码的应用程序的不同版本的过程。</p>
+<p><em>如果您不确定是否需要新的版本类型或新产品，您应该问自己是否要创建内部使用的同一个应用程序的新版本，或是新版APK发布到Google Play。 如果您需要一个全新的应用程序，需要与您现有的应用程序分开发布，那么使用 product flavors 是一个很好的方法。 否则，您应该坚持使用构建类型。</em></p>
+<p><a href="https://stackoverflow.com/questions/27905934/why-are-build-types-distinct-from-product-flavors" title="Why are build types distinct from product flavors?" target="_blank" rel="external">Why are build types distinct from product flavors?</a></p>
+<h3 id="创建产品风格"><a href="#创建产品风格" class="headerlink" title="创建产品风格"></a>创建产品风格</h3><p>使用 productFlavor ：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"> productFlavors &#123;</div><div class="line">     red &#123;</div><div class="line">         applicationId &quot;com.gradleforandroid.red&quot;</div><div class="line">         versionCode 3</div><div class="line">         resValue &quot;dimen&quot;, &quot;flavor_textSize&quot;, &quot;20dp&quot;</div><div class="line">     &#125;</div><div class="line">     blue &#123;</div><div class="line">         applicationId &quot;com.gradleforandroid.blue&quot;</div><div class="line">         versonCode 4</div><div class="line">minSdkVersion 14</div><div class="line">         resValue &quot;dimen&quot;, &quot;flavor_textSize&quot;, &quot;10dp&quot;</div><div class="line">     &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<p>Product flavors 具有不同于构建类型的属性。这是因为product flavors是ProductFlavor类的对象，就像所有构建脚本中存在的defaultConfig对象一样。这意味着defaultConfig和所有的product flavors共享相同的属性。</p>
+<h3 id="Source-sets"><a href="#Source-sets" class="headerlink" title="Source sets"></a>Source sets</h3><p>product flavors 有自己的源集（source set）文件夹，文件夹名为 flavor name 跟 build type name，例如 blueRelease，可以为不同的 flavor 设置不同的 app 图标。</p>
+<p>组合文件夹的组件将具有比构建类型文件夹和product flavor文件夹中的组件更高的优先级。</p>
+<h3 id="多种变体-Multiﬂavor-variants"><a href="#多种变体-Multiﬂavor-variants" class="headerlink" title="多种变体(Multiﬂavor variants)"></a>多种变体(Multiﬂavor variants)</h3><p>在某些情况下，您可能需要进一步了解并创建 product flavors 的组合。例如，客户端A和客户端B可能都希望他们的应用程序的有免费和付费两个版本，它们基于相同的代码库，但具有不同的品牌。创建四个不同的 flavors 将意味着具有几个重复的设置，这不是最好的方法。使用 flavor dimensions 可以以有效的方式组合 flavors，如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">flavorDimensions &quot;color&quot;, &quot;price&quot;</div><div class="line">productFlavors &#123;</div><div class="line">    red &#123;</div><div class="line">        flavorDimension &quot;color&quot;</div><div class="line">    &#125;</div><div class="line">    blue &#123;</div><div class="line">        flavorDimension &quot;color&quot;</div><div class="line">    &#125;</div><div class="line">    free &#123;</div><div class="line">        flavorDimension &quot;price&quot;</div><div class="line">    &#125;</div><div class="line">    paid &#123;</div><div class="line">        flavorDimension &quot;price&quot;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>一旦添加了flavor dimensions，Gradle就可以为每个flavor指定一个维度。如果没有添加，构建将会报错。</p>
+<p>flavorDimensions数组定义了dimensions，dimensions的顺序非常重要。当组合两个flavors时，它们可能已经定义了相同的属性或资源。在这种情况下，flavor维数组的顺序确定哪个flavor配置覆盖另一个。在前面的示例中，颜色维度会覆盖价格维度。该顺序也决定了构建变体的名称。</p>
+<p>假设使用debug和release版构建类型的默认构建配置，定义前一个示例所示的flavors将生成所有这些构建变体：</p>
+<ul>
+<li>blueFreeDebug and blueFreeRelease</li>
+<li>bluePaidDebug and bluePaidRelease</li>
+<li>redFreeDebug and redFreeRelease</li>
+<li>redPaidDebug and redPaidRelease</li>
+</ul>
+<h3 id="资源和清单文件的合并"><a href="#资源和清单文件的合并" class="headerlink" title="资源和清单文件的合并"></a>资源和清单文件的合并</h3><p>引入源集对构建过程增加了额外的复杂性。Gradle 的 Android plugin需要在打包应用程序之前将主源集合和构建类型源集合合并在一起。此外，library 项目还可以提供额外的资源，这也需要合并。清单文件也是一样。例如，可能需要在应用程序的调试版本中添加额外的Android权限才能存储日志文件。您不想在主源集上声明此权限，因为这可能会失去潜在的用户。相反，可以在调试构建类型源集中添加一个额外的清单文件，以声明额外权限。</p>
+<p>资源和清单的优先顺序如下所示：</p>
+<p><img src="/images/gradle-file-merge.png" alt="gradle-file-merge"></p>
+<p>如果资源在 flavor 和主源集合中均声明，flavor的资源将被赋予更高的优先级。在这种情况下，flavor源集中的资源将被打包，而不是主源中的资源集。在library项目中定义的资源总是具有最低优先级。</p>
+<h3 id="变体过滤-Variant-filters"><a href="#变体过滤-Variant-filters" class="headerlink" title="变体过滤(Variant filters)"></a>变体过滤(Variant filters)</h3><p>可以完全忽略构建中的某些变体,这样可以使用通用组装命令加快构建所有变体的过程，并且任务列表不会被不应该执行的任务所污染。这也确保了构建版本不会显示在Android Studio构建版本切换器中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">android.variantFilter &#123; variant -&gt;</div><div class="line">    if(variant.buildType.name.equals(&apos;release&apos;)) &#123;</div><div class="line">        variant.getFlavors().each() &#123; flavor -&gt;</div><div class="line">            if (flavor.name.equals(&apos;blue&apos;)) &#123;</div><div class="line">                variant.setIgnore(true);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="签名配置-Signing-confgurations"><a href="#签名配置-Signing-confgurations" class="headerlink" title="签名配置(Signing confgurations)"></a>签名配置(Signing confgurations)</h3><p>在Google Play或任何其他应用商店上发布应用之前，您需要使用私钥签名。如果有不同客户的付费和免费版本或不同的应用程序，则需要使用其他key签署每个flavor。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line"></div><div class="line">    signingConfigs &#123;</div><div class="line">        staging.initWith(signingConfigs.debug)</div><div class="line"></div><div class="line">        release &#123;</div><div class="line">            storeFile file(&quot;release.keystore&quot;)</div><div class="line">            storePassword &quot;secretpassword&quot;</div><div class="line">            keyAlias &quot;gradleforandroid&quot;</div><div class="line">            keyPassword &quot;secretpassword&quot;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>调试配置由Android插件自动设置，并使用具有已知密码的通用密钥库，因此无需为此构建类型创建签名配置。</p>
+<p>示例中的staging配置使用initWith()，它会将所有属性从另一个签名配置复制。这意味着staging生成使用debug key进行签名，而不是自己定义。</p>
+<p>release 配置使用 storeFile 指定密钥库文件的路径，然后定义密钥别名和两个密码。</p>
+<p>定义签名配置后，您需要将其应用于您的构建类型或flavors。构建类型和flavors都有一个名为signConfig的属性:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">	buildTypes &#123;</div><div class="line">		release &#123;</div><div class="line">		signingConfig signingConfigs.release</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	productFlavors &#123;</div><div class="line">		blue &#123;</div><div class="line">			signingConfig signingConfigs.release</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样使用签名配置，会导致问题，当向flavor分配配置时，实际上覆盖了构建类型的签名配置。当使用 flavors 时，每个构建类型每个flavor有一个不同的键：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">	buildTypes &#123;</div><div class="line">		release &#123;</div><div class="line">			productFlavors.red.signingConfig signingConfigs.red</div><div class="line">			productFlavors.blue.signingConfig signingConfigs.blue</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>该示例显示了如何使用不同的签名配置来使用release构建类型的blue和red flavors，而不影响 debug 和 staing 构建类型。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Gradle/" rel="tag"># Gradle</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/26/Gradle-for-Android-3-Managing-Dependencies/" rel="next" title="Gradle for Android-3.管理依赖关系(Managing Dependencies)">
+                <i class="fa fa-chevron-left"></i> Gradle for Android-3.管理依赖关系(Managing Dependencies)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/01/understand-ThreadLocal/" rel="prev" title="理解 ThreadLocal">
+                理解 ThreadLocal <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="YoungTr" />
+          <p class="site-author-name" itemprop="name">YoungTr</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#构建类型（Build-types）"><span class="nav-number">1.</span> <span class="nav-text">构建类型（Build types）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建构建类型"><span class="nav-number">2.</span> <span class="nav-text">创建构建类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#资源集合（Source-sets）"><span class="nav-number">3.</span> <span class="nav-text">资源集合（Source sets）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#依赖"><span class="nav-number">4.</span> <span class="nav-text">依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Product-ﬂavors-产品风格"><span class="nav-number">5.</span> <span class="nav-text">Product ﬂavors 产品风格</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建产品风格"><span class="nav-number">6.</span> <span class="nav-text">创建产品风格</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Source-sets"><span class="nav-number">7.</span> <span class="nav-text">Source sets</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多种变体-Multiﬂavor-variants"><span class="nav-number">8.</span> <span class="nav-text">多种变体(Multiﬂavor variants)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#资源和清单文件的合并"><span class="nav-number">9.</span> <span class="nav-text">资源和清单文件的合并</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变体过滤-Variant-filters"><span class="nav-number">10.</span> <span class="nav-text">变体过滤(Variant filters)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#签名配置-Signing-confgurations"><span class="nav-number">11.</span> <span class="nav-text">签名配置(Signing confgurations)</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">YoungTr</span>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

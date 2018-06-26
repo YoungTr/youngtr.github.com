@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android,Gradle," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="库（Repositories）Gradle 并不会设置默认的存储库，在 Android Studio 中需要自己将依赖添加到存储块中： 123repositories &amp;#123;    jcenter()&amp;#125; Gradle支持三种不同类型的存储库：Maven，Ivy和静态文件或者目录。 依赖关系由三个元素标识：组，名称和版本(group,name,version)。 1234depend">
+<meta name="keywords" content="Android,Gradle">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Gradle for Android-3.管理依赖关系(Managing Dependencies)">
+<meta property="og:url" content="https://youngtr.github.io/2017/10/26/Gradle-for-Android-3-Managing-Dependencies/index.html">
+<meta property="og:site_name" content="YoungTr">
+<meta property="og:description" content="库（Repositories）Gradle 并不会设置默认的存储库，在 Android Studio 中需要自己将依赖添加到存储块中： 123repositories &amp;#123;    jcenter()&amp;#125; Gradle支持三种不同类型的存储库：Maven，Ivy和静态文件或者目录。 依赖关系由三个元素标识：组，名称和版本(group,name,version)。 1234depend">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://youngtr.github.io/images/gradle-native-libraries.png">
+<meta property="og:updated_time" content="2018-06-05T04:57:32.964Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Gradle for Android-3.管理依赖关系(Managing Dependencies)">
+<meta name="twitter:description" content="库（Repositories）Gradle 并不会设置默认的存储库，在 Android Studio 中需要自己将依赖添加到存储块中： 123repositories &amp;#123;    jcenter()&amp;#125; Gradle支持三种不同类型的存储库：Maven，Ivy和静态文件或者目录。 依赖关系由三个元素标识：组，名称和版本(group,name,version)。 1234depend">
+<meta name="twitter:image" content="https://youngtr.github.io/images/gradle-native-libraries.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://youngtr.github.io/2017/10/26/Gradle-for-Android-3-Managing-Dependencies/"/>
+
+
+
+
+
+  <title>Gradle for Android-3.管理依赖关系(Managing Dependencies) | YoungTr</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YoungTr</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://youngtr.github.io/2017/10/26/Gradle-for-Android-3-Managing-Dependencies/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YoungTr">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoungTr">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Gradle for Android-3.管理依赖关系(Managing Dependencies)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-26T09:22:47+08:00">
+                2017-10-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Gradle/" itemprop="url" rel="index">
+                    <span itemprop="name">Gradle</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="库（Repositories）"><a href="#库（Repositories）" class="headerlink" title="库（Repositories）"></a>库（Repositories）</h3><p>Gradle 并不会设置默认的存储库，在 Android Studio 中需要自己将依赖添加到存储块中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">repositories &#123;</div><div class="line">    jcenter()</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Gradle支持三种不同类型的存储库：Maven，Ivy和静态文件或者目录。</p>
+<p>依赖关系由三个元素标识：组，名称和版本(group,name,version)。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">dependencies &#123;</div><div class="line">	compile &apos;com.google.code.gson:gson:2.3&apos;</div><div class="line">	compile &apos;com.squareup.retrofit:retrofit:1.9.0&apos;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="预配置的存储库"><a href="#预配置的存储库" class="headerlink" title="预配置的存储库"></a>预配置的存储库</h3><p>Gradle已经预配置了三个Maven仓库：JCenter，Maven Central和 local Maven 仓库:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">repositories &#123;</div><div class="line">	mavenCentral()</div><div class="line">	jcenter()</div><div class="line">	mavenLocal()</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其中，JCenter是Maven Central的超集。</p>
+<p>Local Maven 仓库是的所有依赖项的本地缓存，也可以添加自己的依赖关系。默认情况下，本地存储库在主目录中下一个名为.m2的文件夹中。在Linux或Mac OS X上的路径<br>是〜/.m2 在Microsoft Windows上，是％UserProfile％.m2</p>
+<h3 id="远程存储库"><a href="#远程存储库" class="headerlink" title="远程存储库"></a>远程存储库</h3><p>一些组织创建有趣的插件或库，更喜欢在自己的Maven或Ivy服务器上托管它们，而不是将它们发布到Maven Central或JCenter。我们可以这样添加这些依赖库：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">repositories &#123;</div><div class="line">	maven &#123;</div><div class="line">	url &quot;http://repo.acmecorp.com/maven2&quot;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="本地仓库"><a href="#本地仓库" class="headerlink" title="本地仓库"></a>本地仓库</h3><p>可以在自己的硬盘驱动器或网络驱动器上运行Maven和Ivy存储库。要将这些添加到构建中，只需将URL配置到驱动器上位置的相对路径或绝对路径：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">repositories &#123;</div><div class="line">	maven &#123;</div><div class="line">	url &quot;../repo&quot;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>默认情况下，创建新的Android项目依赖于Android支持库。 使用SDK管理器安装Google存储库时，会在硬盘 ANDROID_SDK/extras/google/m2repository 和ANDROID_SDK/extras/android/m2repository上创建两个Maven存储库。 Gradle可以从这里获得 Google 提供的 libraries，例如 Android Support Library 和Google Play Services 。</p>
+<p>也可以使用flatDirs将常规目录添加为存储库：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">repositories &#123;</div><div class="line">	flatDir &#123;</div><div class="line">	dirs &apos;aars&apos;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="本地依赖（Local-dependencies）"><a href="#本地依赖（Local-dependencies）" class="headerlink" title="本地依赖（Local dependencies）"></a>本地依赖（Local dependencies）</h3><p>添加一些 jar 文件或者是 native library</p>
+<h3 id="文件依赖（File-dependencies）"><a href="#文件依赖（File-dependencies）" class="headerlink" title="文件依赖（File dependencies）"></a>文件依赖（File dependencies）</h3><p>要将JAR文件添加为依赖关系，可以使用Gradle提供的文件方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dependencies &#123;</div><div class="line">	compile files(&apos;libs/domoarigato.jar&apos;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果有很多JAR文件，可以一次添加整个文件夹：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dependencies &#123;</div><div class="line">	compile fileTree(&apos;libs&apos;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>默认情况下，新创建的 Android 项目有一个libs文件夹，并声明它用于依赖。有一个过滤器，确保只使用JAR文件,而文件夹中的所有文件:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">compile fileTree(dir: &apos;libs&apos;, include: [&apos;*.jar&apos;])</div></pre></td></tr></table></figure>
+<h3 id="本地库-Native-libraries"><a href="#本地库-Native-libraries" class="headerlink" title="本地库 (Native libraries)"></a>本地库 (Native libraries)</h3><p>在模块目录创建一个 “jniLibs” 文件夹，然后创建不同平台的子文件夹，将 .so 文件加入到子文件中：</p>
+<p><img src="/images/gradle-native-libraries.png" alt="gradle-native-libraries"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">	sourceSets.main &#123;</div><div class="line">	jniLibs.srcDir &apos;src/main/libs&apos;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="使用-aar-文件"><a href="#使用-aar-文件" class="headerlink" title="使用 .aar 文件"></a>使用 .aar 文件</h3><p>要将.aar文件作为依赖项添加，需要在应用程序模块中创建一个文件夹，将.aar文件复制到其中，并将该文件夹添加为存储库：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">repositories &#123;</div><div class="line">	flatDir &#123;</div><div class="line">	dirs &apos;aars&apos;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>也可以这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dependencies &#123;</div><div class="line">	compile(name:&apos;libraryname&apos;, ext:&apos;aar&apos;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这将告诉Gradle寻找具有.aar扩展名的某个名称的库。</p>
+<h3 id="依赖概念（Dependency-concepts）"><a href="#依赖概念（Dependency-concepts）" class="headerlink" title="依赖概念（Dependency concepts）"></a>依赖概念（Dependency concepts）</h3><h3 id="配置（Confgurations）"><a href="#配置（Confgurations）" class="headerlink" title="配置（Confgurations）"></a>配置（Confgurations）</h3><p>有时可能需要使用仅存在于某些设备上的 SDK，比如特定厂商提供的蓝牙 SDK。 为了<br>可以编译代码，需要将 SDK 添加到编译类路径中，而不需要将 SDK 包含在 APK 中，因为已经存在那些设备上了。这是依赖配置的来源。</p>
+<p>Gradle groups dependencies into configurations, which are just named sets of files.These are the standard configurations for an Android app or library:</p>
+<ul>
+<li>compile</li>
+<li>apk</li>
+<li>provided</li>
+<li>testCompile</li>
+<li>androidTestCompile</li>
+</ul>
+<p>编译配置(<strong>compile configuration</strong>)是默认的，包含所有编译主要应用程序的依赖关系。这种配置下的所有都会被添加 classpath，还会被生成到 apk 中。</p>
+<p>apk配置（<strong>apk configuration</strong>）中的依赖关系只会被添加到包中，不会添加到编译类路径（classpath）；提供配置（<strong>provided configuration</strong>）完全相反，它的依赖关系将不被打包。这两个配置只对 JAR 依赖关系有效，添加库项目（library projects）将导致错误。</p>
+<p><strong>testCompile</strong> 和 <strong>androidTestCompile</strong> 配置添加额外的测试库，比如 JUnit 或者 Espresso，这样这些框架只出现在测试 APK 中，不会出现在发布 APK 中。</p>
+<p>除了这些标准配置之外，Android插件还为每个构建变体生成配置，从而可以将配置依赖关系添加到诸如 <strong>debugCompile</strong>，<strong>releaseProvided</strong> 等配置中。例如，如果仅将日志框架添加到调试版本中，这就很有用。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Gradle/" rel="tag"># Gradle</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/24/Gradle-for-Android-2-Basic-Build-Customization/" rel="next" title="Gradle for Android-2.基本构建定制(Basic Build Customization)">
+                <i class="fa fa-chevron-left"></i> Gradle for Android-2.基本构建定制(Basic Build Customization)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/31/Gradle-for-Android-4-Creating-Build-Variants/" rel="prev" title="Gradle for Android-4.创建构建变体(Creating Build Variants)">
+                Gradle for Android-4.创建构建变体(Creating Build Variants) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="YoungTr" />
+          <p class="site-author-name" itemprop="name">YoungTr</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#库（Repositories）"><span class="nav-number">1.</span> <span class="nav-text">库（Repositories）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#预配置的存储库"><span class="nav-number">2.</span> <span class="nav-text">预配置的存储库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#远程存储库"><span class="nav-number">3.</span> <span class="nav-text">远程存储库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#本地仓库"><span class="nav-number">4.</span> <span class="nav-text">本地仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#本地依赖（Local-dependencies）"><span class="nav-number">5.</span> <span class="nav-text">本地依赖（Local dependencies）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件依赖（File-dependencies）"><span class="nav-number">6.</span> <span class="nav-text">文件依赖（File dependencies）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#本地库-Native-libraries"><span class="nav-number">7.</span> <span class="nav-text">本地库 (Native libraries)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-aar-文件"><span class="nav-number">8.</span> <span class="nav-text">使用 .aar 文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#依赖概念（Dependency-concepts）"><span class="nav-number">9.</span> <span class="nav-text">依赖概念（Dependency concepts）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置（Confgurations）"><span class="nav-number">10.</span> <span class="nav-text">配置（Confgurations）</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">YoungTr</span>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
