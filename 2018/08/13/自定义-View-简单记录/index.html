@@ -114,7 +114,9 @@
 <meta property="og:image" content="https://youngtr.github.io/images/PathDashPathEffect.jpg">
 <meta property="og:image" content="https://youngtr.github.io/images/SumPathEffect.jpg">
 <meta property="og:image" content="https://youngtr.github.io/images/ComposePathEffect.jpg">
-<meta property="og:updated_time" content="2018-08-29T03:11:44.099Z">
+<meta property="og:image" content="https://youngtr.github.io/images/drawText1.jpg">
+<meta property="og:image" content="https://youngtr.github.io/images/drawText2.jpg">
+<meta property="og:updated_time" content="2018-08-29T05:52:03.399Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自定义 View 查漏补缺">
 <meta name="twitter:description" content="1. Path.setFillType(Path.FillType ft) 设置填充方式 EVEN_ODD WINDING (默认值) INVERSE_EVEN_ODD INVERSE_WINDING  其中后面的两个带有 INVERSE_ 前缀的，只是前两个的反色版本 参考：even-odd rule （奇偶原则）、non-zero winding rule （非零环绕数原则）  2. Pain">
@@ -446,6 +448,12 @@
 <li>ComposePathEffect 这也是一个组合效果类的 PathEffect 。不过它是先对目标 Path 使用一个 PathEffect，然后再对这个改变后的 Path 使用另一个 PathEffect </li>
 </ul>
 <p><img src="/images/ComposePathEffect.jpg" alt=""></p>
+<h3 id="8-安卓自定义View进阶-PathMeasure"><a href="#8-安卓自定义View进阶-PathMeasure" class="headerlink" title="8. 安卓自定义View进阶-PathMeasure"></a>8. 安卓自定义View进阶-PathMeasure</h3><p><a href="http://www.gcssloop.com/customview/Path_PathMeasure" target="_blank" rel="external">http://www.gcssloop.com/customview/Path_PathMeasure</a></p>
+<h3 id="9-安卓自定义View进阶-Path之贝塞尔曲线"><a href="#9-安卓自定义View进阶-Path之贝塞尔曲线" class="headerlink" title="9. 安卓自定义View进阶-Path之贝塞尔曲线"></a>9. 安卓自定义View进阶-Path之贝塞尔曲线</h3><p><a href="http://www.gcssloop.com/customview/Path_Bezier" target="_blank" rel="external">http://www.gcssloop.com/customview/Path_Bezier</a></p>
+<h3 id="10-drawText-String-text-float-x-float-y-Paint-paint"><a href="#10-drawText-String-text-float-x-float-y-Paint-paint" class="headerlink" title="10. drawText(String text, float x, float y, Paint paint)"></a>10. drawText(String text, float x, float y, Paint paint)</h3><p>方法的参数很简单： text 是文字内容，x 和 y 是文字的坐标。但需要注意：这个坐标并不是文字的左上角，而是一个与左下角比较接近的位置。大概在这里：</p>
+<p><img src="/images/drawText1.jpg" alt=""></p>
+<p>参数 y 是指文字的<strong>基线（baseline）</strong></p>
+<p><img src="/images/drawText2.jpg" alt=""></p>
 
       
     </div>
@@ -624,7 +632,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Path-setFillType-Path-FillType-ft-设置填充方式"><span class="nav-number">1.</span> <span class="nav-text">1. Path.setFillType(Path.FillType ft) 设置填充方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Paint-颜色-Shader"><span class="nav-number">2.</span> <span class="nav-text">2. Paint 颜色 - Shader</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-setStrokeCap-Paint-Cap-cap"><span class="nav-number">3.</span> <span class="nav-text">3. setStrokeCap(Paint.Cap cap)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-setStrokeJoin-Paint-Join-join"><span class="nav-number">4.</span> <span class="nav-text">4. setStrokeJoin(Paint.Join join)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-setStrokeMiter-float-miter"><span class="nav-number">5.</span> <span class="nav-text">5. setStrokeMiter(float miter)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-setFilterBitmap-boolean-filter"><span class="nav-number">6.</span> <span class="nav-text">6. setFilterBitmap(boolean filter)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-setPathEffect-PathEffect-effect"><span class="nav-number">7.</span> <span class="nav-text">7. setPathEffect(PathEffect effect)</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Path-setFillType-Path-FillType-ft-设置填充方式"><span class="nav-number">1.</span> <span class="nav-text">1. Path.setFillType(Path.FillType ft) 设置填充方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Paint-颜色-Shader"><span class="nav-number">2.</span> <span class="nav-text">2. Paint 颜色 - Shader</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-setStrokeCap-Paint-Cap-cap"><span class="nav-number">3.</span> <span class="nav-text">3. setStrokeCap(Paint.Cap cap)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-setStrokeJoin-Paint-Join-join"><span class="nav-number">4.</span> <span class="nav-text">4. setStrokeJoin(Paint.Join join)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-setStrokeMiter-float-miter"><span class="nav-number">5.</span> <span class="nav-text">5. setStrokeMiter(float miter)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-setFilterBitmap-boolean-filter"><span class="nav-number">6.</span> <span class="nav-text">6. setFilterBitmap(boolean filter)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-setPathEffect-PathEffect-effect"><span class="nav-number">7.</span> <span class="nav-text">7. setPathEffect(PathEffect effect)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-安卓自定义View进阶-PathMeasure"><span class="nav-number">8.</span> <span class="nav-text">8. 安卓自定义View进阶-PathMeasure</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-安卓自定义View进阶-Path之贝塞尔曲线"><span class="nav-number">9.</span> <span class="nav-text">9. 安卓自定义View进阶-Path之贝塞尔曲线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-drawText-String-text-float-x-float-y-Paint-paint"><span class="nav-number">10.</span> <span class="nav-text">10. drawText(String text, float x, float y, Paint paint)</span></a></li></ol></div>
             
 
           </div>
