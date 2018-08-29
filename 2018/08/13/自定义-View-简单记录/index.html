@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Android,View," />
 
 
 
@@ -94,14 +94,21 @@
 
 
 
+<meta name="description" content="1. Path.setFillType(Path.FillType ft) 设置填充方式 EVEN_ODD WINDING (默认值) INVERSE_EVEN_ODD INVERSE_WINDING  其中后面的两个带有 INVERSE_ 前缀的，只是前两个的反色版本 参考：even-odd rule （奇偶原则）、non-zero winding rule （非零环绕数原则）  2. Pain">
+<meta name="keywords" content="Android,View">
 <meta property="og:type" content="article">
 <meta property="og:title" content="自定义 View 查漏补缺">
 <meta property="og:url" content="https://youngtr.github.io/2018/08/13/自定义-View-简单记录/index.html">
 <meta property="og:site_name" content="YoungTr">
+<meta property="og:description" content="1. Path.setFillType(Path.FillType ft) 设置填充方式 EVEN_ODD WINDING (默认值) INVERSE_EVEN_ODD INVERSE_WINDING  其中后面的两个带有 INVERSE_ 前缀的，只是前两个的反色版本 参考：even-odd rule （奇偶原则）、non-zero winding rule （非零环绕数原则）  2. Pain">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-14T08:58:54.851Z">
+<meta property="og:image" content="https://youngtr.github.io/images/filltype.jpg">
+<meta property="og:image" content="https://youngtr.github.io/images/bitmapshader1.jpg">
+<meta property="og:updated_time" content="2018-08-28T09:34:46.601Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自定义 View 查漏补缺">
+<meta name="twitter:description" content="1. Path.setFillType(Path.FillType ft) 设置填充方式 EVEN_ODD WINDING (默认值) INVERSE_EVEN_ODD INVERSE_WINDING  其中后面的两个带有 INVERSE_ 前缀的，只是前两个的反色版本 参考：even-odd rule （奇偶原则）、non-zero winding rule （非零环绕数原则）  2. Pain">
+<meta name="twitter:image" content="https://youngtr.github.io/images/filltype.jpg">
 
 
 
@@ -309,6 +316,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android自定义View/" itemprop="url" rel="index">
+                    <span itemprop="name">Android自定义View</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -336,9 +365,35 @@
       
 
       
-        <ol>
-<li></li>
-</ol>
+        <h3 id="1-Path-setFillType-Path-FillType-ft-设置填充方式"><a href="#1-Path-setFillType-Path-FillType-ft-设置填充方式" class="headerlink" title="1. Path.setFillType(Path.FillType ft) 设置填充方式"></a>1. Path.setFillType(Path.FillType ft) 设置填充方式</h3><ul>
+<li>EVEN_ODD</li>
+<li>WINDING (默认值)</li>
+<li>INVERSE_EVEN_ODD</li>
+<li>INVERSE_WINDING</li>
+</ul>
+<p><em>其中后面的两个带有 INVERSE_ 前缀的，只是前两个的反色版本</em></p>
+<p><a href="https://hencoder.com/ui-1-1/" target="_blank" rel="external">参考：even-odd rule （奇偶原则）、non-zero winding rule （非零环绕数原则）</a></p>
+<p><img src="/images/filltype.jpg" alt=""></p>
+<h3 id="2-Paint-颜色-Shader"><a href="#2-Paint-颜色-Shader" class="headerlink" title="2. Paint 颜色 - Shader"></a>2. Paint 颜色 - Shader</h3><p>Paint.setShader(Shader shader)</p>
+<ul>
+<li>LinearGradient</li>
+<li>RadialGradient</li>
+<li>SweepGradient</li>
+<li>BitmapShader</li>
+<li>ComposeShader</li>
+</ul>
+<p><strong>BitmapShader</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.batman);  </div><div class="line">Shader shader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);  </div><div class="line">paint.setShader(shader);</div><div class="line"></div><div class="line">...</div><div class="line"></div><div class="line">canvas.drawCircle(300, 300, 200, paint)</div></pre></td></tr></table></figure>
+<p><img src="/images/bitmapshader1.jpg" alt=""></p>
+<p><strong>如果想绘制圆形的 Bitmap，就别用 drawBitmap() 了，改用 drawCircle() + BitmapShader 就可以了（其他形状同理）。</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ComposeShader(Shader shaderA, Shader shaderB, PorterDuff.Mode mode)</div></pre></td></tr></table></figure>
+<ul>
+<li>mode: 两个 Shader 的叠加模式，即 shaderA 和 shaderB 应该怎样共同绘制。它的类型是 PorterDuff.Mode 。</li>
+</ul>
+<p><a href="https://hencoder.com/ui-1-2/" target="_blank" rel="external">参考：自定义 View 1-2 Paint 详解</a></p>
+<p><a href="https://github.com/hdodenhof/CircleImageView" target="_blank" rel="external">https://github.com/hdodenhof/CircleImageView</a></p>
+<p><a href="https://blog.csdn.net/zhoubin1992/article/details/47258639" target="_blank" rel="external">自定义圆形头像CircleImageView的使用和源码分析</a></p>
+<p><a href="https://www.jianshu.com/p/d11892bbe055" target="_blank" rel="external">各个击破搞明白PorterDuff.Mode</a></p>
 
       
     </div>
@@ -353,6 +408,14 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/View/" rel="tag"># View</a>
+          
+        </div>
       
 
       
@@ -372,6 +435,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/28/Android-Knowleage-Point/" rel="prev" title="Android Knowleage Point">
+                Android Knowleage Point <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -423,8 +490,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -439,7 +515,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-count">26</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -450,7 +526,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -486,6 +562,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Path-setFillType-Path-FillType-ft-设置填充方式"><span class="nav-number">1.</span> <span class="nav-text">1. Path.setFillType(Path.FillType ft) 设置填充方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Paint-颜色-Shader"><span class="nav-number">2.</span> <span class="nav-text">2. Paint 颜色 - Shader</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
