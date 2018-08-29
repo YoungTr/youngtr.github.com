@@ -108,7 +108,13 @@
 <meta property="og:image" content="https://youngtr.github.io/images/StrokeJoin.jpg">
 <meta property="og:image" content="https://youngtr.github.io/images/StrokeMiter.jpg">
 <meta property="og:image" content="https://youngtr.github.io/images/FilterBitmap.jpg">
-<meta property="og:updated_time" content="2018-08-29T02:57:44.476Z">
+<meta property="og:image" content="https://youngtr.github.io/images/CornerPathEffect.jpg">
+<meta property="og:image" content="https://youngtr.github.io/images/DiscretePathEffect.jpg">
+<meta property="og:image" content="https://youngtr.github.io/images/DashPathEffect.jpg">
+<meta property="og:image" content="https://youngtr.github.io/images/PathDashPathEffect.jpg">
+<meta property="og:image" content="https://youngtr.github.io/images/SumPathEffect.jpg">
+<meta property="og:image" content="https://youngtr.github.io/images/ComposePathEffect.jpg">
+<meta property="og:updated_time" content="2018-08-29T03:11:44.099Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自定义 View 查漏补缺">
 <meta name="twitter:description" content="1. Path.setFillType(Path.FillType ft) 设置填充方式 EVEN_ODD WINDING (默认值) INVERSE_EVEN_ODD INVERSE_WINDING  其中后面的两个带有 INVERSE_ 前缀的，只是前两个的反色版本 参考：even-odd rule （奇偶原则）、non-zero winding rule （非零环绕数原则）  2. Pain">
@@ -416,6 +422,30 @@
 <p><img src="/images/StrokeMiter.jpg" alt=""></p>
 <h3 id="6-setFilterBitmap-boolean-filter"><a href="#6-setFilterBitmap-boolean-filter" class="headerlink" title="6. setFilterBitmap(boolean filter)"></a>6. setFilterBitmap(boolean filter)</h3><p>设置是否使用双线性过滤来绘制 Bitmap</p>
 <p><img src="/images/FilterBitmap.jpg" alt=""></p>
+<h3 id="7-setPathEffect-PathEffect-effect"><a href="#7-setPathEffect-PathEffect-effect" class="headerlink" title="7. setPathEffect(PathEffect effect)"></a>7. setPathEffect(PathEffect effect)</h3><ul>
+<li>CornerPathEffect 把所有拐角变成圆角</li>
+</ul>
+<p><img src="/images/CornerPathEffect.jpg" alt=""></p>
+<ul>
+<li>DiscretePathEffect 把线条进行随机的偏离，让轮廓变得乱七八糟。乱七八糟的方式和程度由参数决定。</li>
+</ul>
+<p><img src="/images/DiscretePathEffect.jpg" alt=""></p>
+<ul>
+<li>DashPathEffect 使用虚线来绘制线条</li>
+</ul>
+<p><img src="/images/DashPathEffect.jpg" alt=""></p>
+<ul>
+<li>PathDashPathEffect 这个方法比 DashPathEffect 多一个前缀 Path ，所以顾名思义，它是使用一个 Path 来绘制「虚线」</li>
+</ul>
+<p><img src="/images/PathDashPathEffect.jpg" alt=""></p>
+<ul>
+<li>SumPathEffect 这是一个组合效果类的 PathEffect 。它的行为特别简单，就是分别按照两种 PathEffect 分别对目标进行绘制</li>
+</ul>
+<p><img src="/images/SumPathEffect.jpg" alt=""></p>
+<ul>
+<li>ComposePathEffect 这也是一个组合效果类的 PathEffect 。不过它是先对目标 Path 使用一个 PathEffect，然后再对这个改变后的 Path 使用另一个 PathEffect </li>
+</ul>
+<p><img src="/images/ComposePathEffect.jpg" alt=""></p>
 
       
     </div>
@@ -594,7 +624,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Path-setFillType-Path-FillType-ft-设置填充方式"><span class="nav-number">1.</span> <span class="nav-text">1. Path.setFillType(Path.FillType ft) 设置填充方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Paint-颜色-Shader"><span class="nav-number">2.</span> <span class="nav-text">2. Paint 颜色 - Shader</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-setStrokeCap-Paint-Cap-cap"><span class="nav-number">3.</span> <span class="nav-text">3. setStrokeCap(Paint.Cap cap)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-setStrokeJoin-Paint-Join-join"><span class="nav-number">4.</span> <span class="nav-text">4. setStrokeJoin(Paint.Join join)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-setStrokeMiter-float-miter"><span class="nav-number">5.</span> <span class="nav-text">5. setStrokeMiter(float miter)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-setFilterBitmap-boolean-filter"><span class="nav-number">6.</span> <span class="nav-text">6. setFilterBitmap(boolean filter)</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Path-setFillType-Path-FillType-ft-设置填充方式"><span class="nav-number">1.</span> <span class="nav-text">1. Path.setFillType(Path.FillType ft) 设置填充方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Paint-颜色-Shader"><span class="nav-number">2.</span> <span class="nav-text">2. Paint 颜色 - Shader</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-setStrokeCap-Paint-Cap-cap"><span class="nav-number">3.</span> <span class="nav-text">3. setStrokeCap(Paint.Cap cap)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-setStrokeJoin-Paint-Join-join"><span class="nav-number">4.</span> <span class="nav-text">4. setStrokeJoin(Paint.Join join)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-setStrokeMiter-float-miter"><span class="nav-number">5.</span> <span class="nav-text">5. setStrokeMiter(float miter)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-setFilterBitmap-boolean-filter"><span class="nav-number">6.</span> <span class="nav-text">6. setFilterBitmap(boolean filter)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-setPathEffect-PathEffect-effect"><span class="nav-number">7.</span> <span class="nav-text">7. setPathEffect(PathEffect effect)</span></a></li></ol></div>
             
 
           </div>
