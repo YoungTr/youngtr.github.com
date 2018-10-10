@@ -105,7 +105,7 @@
 <meta property="og:image" content="https://youngtr.github.io/images/gradleflow.png">
 <meta property="og:image" content="https://youngtr.github.io/images/gradleflow1.png">
 <meta property="og:image" content="https://youngtr.github.io/images/gradleflow2.png">
-<meta property="og:updated_time" content="2018-10-10T10:58:19.662Z">
+<meta property="og:updated_time" content="2018-10-10T11:03:46.925Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Gradle记录">
 <meta name="twitter:description" content="1. Gradle 执行流程 全面理解Gradle - 执行时序     2. Project123456789101112131415161718192021222324252627282930313233343536// Project api 讲解// 配置阶段执行this.getProjects()def getProjects() &amp;#123;    println &amp;apos;----">
@@ -395,6 +395,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    compileSdkVersion rootProject.ext.androidBuildToolsVersion</div><div class="line">    buildToolsVersion rootProject.ext.androidMinSdkVersion</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p><strong>gradle.properties 定义</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">BINTRAY_USER=user</div><div class="line">BINTRAY_KEY=key</div><div class="line">PROJ_GROUP=android</div><div class="line">PROJ_VERSION=1.0.0-beta</div></pre></td></tr></table></figure>
+<h3 id="3-文件相关"><a href="#3-文件相关" class="headerlink" title="3. 文件相关"></a>3. 文件相关</h3><h4 id="3-1-获取文件路劲"><a href="#3-1-获取文件路劲" class="headerlink" title="3.1 获取文件路劲"></a>3.1 获取文件路劲</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">println getRootDir().absolutePath</div><div class="line">println getBuildDir().absolutePath</div><div class="line">println getProjectDir().absolutePath</div></pre></td></tr></table></figure>
       
     </div>
     
@@ -568,7 +569,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Gradle-执行流程"><span class="nav-number">1.</span> <span class="nav-text">1. Gradle 执行流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Project"><span class="nav-number">2.</span> <span class="nav-text">2. Project</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Gradle-执行流程"><span class="nav-number">1.</span> <span class="nav-text">1. Gradle 执行流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Project"><span class="nav-number">2.</span> <span class="nav-text">2. Project</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-文件相关"><span class="nav-number">3.</span> <span class="nav-text">3. 文件相关</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-获取文件路劲"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 获取文件路劲</span></a></li></ol></li></ol></div>
             
 
           </div>
