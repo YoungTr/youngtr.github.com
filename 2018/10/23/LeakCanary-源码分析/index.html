@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="工作记录," />
+  <meta name="keywords" content="开源框架,Android," />
 
 
 
@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="1. [android]在 Html.fromHtml 中的换行被忽略使用”&amp;lt;br&amp;gt;”标签 1&amp;lt;font size=&amp;quot;3&amp;quot; color=&amp;quot;black&amp;quot;&amp;gt;&amp;quot; + message + &amp;quot;&amp;lt;/font&amp;gt;&amp;lt;br&amp;gt; 2. Android使用HttpURLConnection编程遇到的302重定向问题接">
-<meta name="keywords" content="工作记录">
+<meta name="description" content="1. 内存泄漏 集合类泄漏；  1集合类如果仅仅有添加元素的方法，而没有相应的删除机制，导致内存被占用。如果这个集合类是全局性的变量 (比如类中的静态属性，全局性的 map 等即有静态引用或 final 一直指向它)，那么没有相应的删除机制，很可能导致集合所占用的内存只增不减。  单例造成的内存泄漏；  1由于单例的静态特性使得其生命周期跟应用的生命周期一样长，所以如果使用不恰当的话，很容易造成内">
+<meta name="keywords" content="开源框架,Android">
 <meta property="og:type" content="article">
-<meta property="og:title" content="工作记录">
-<meta property="og:url" content="https://youngtr.github.io/2017/10/16/Work-Record/index.html">
+<meta property="og:title" content="LeakCanary 源码分析">
+<meta property="og:url" content="https://youngtr.github.io/2018/10/23/LeakCanary-源码分析/index.html">
 <meta property="og:site_name" content="YoungTr">
-<meta property="og:description" content="1. [android]在 Html.fromHtml 中的换行被忽略使用”&amp;lt;br&amp;gt;”标签 1&amp;lt;font size=&amp;quot;3&amp;quot; color=&amp;quot;black&amp;quot;&amp;gt;&amp;quot; + message + &amp;quot;&amp;lt;/font&amp;gt;&amp;lt;br&amp;gt; 2. Android使用HttpURLConnection编程遇到的302重定向问题接">
+<meta property="og:description" content="1. 内存泄漏 集合类泄漏；  1集合类如果仅仅有添加元素的方法，而没有相应的删除机制，导致内存被占用。如果这个集合类是全局性的变量 (比如类中的静态属性，全局性的 map 等即有静态引用或 final 一直指向它)，那么没有相应的删除机制，很可能导致集合所占用的内存只增不减。  单例造成的内存泄漏；  1由于单例的静态特性使得其生命周期跟应用的生命周期一样长，所以如果使用不恰当的话，很容易造成内">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-05T04:57:32.978Z">
+<meta property="og:updated_time" content="2018-10-23T08:38:19.527Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="工作记录">
-<meta name="twitter:description" content="1. [android]在 Html.fromHtml 中的换行被忽略使用”&amp;lt;br&amp;gt;”标签 1&amp;lt;font size=&amp;quot;3&amp;quot; color=&amp;quot;black&amp;quot;&amp;gt;&amp;quot; + message + &amp;quot;&amp;lt;/font&amp;gt;&amp;lt;br&amp;gt; 2. Android使用HttpURLConnection编程遇到的302重定向问题接">
+<meta name="twitter:title" content="LeakCanary 源码分析">
+<meta name="twitter:description" content="1. 内存泄漏 集合类泄漏；  1集合类如果仅仅有添加元素的方法，而没有相应的删除机制，导致内存被占用。如果这个集合类是全局性的变量 (比如类中的静态属性，全局性的 map 等即有静态引用或 final 一直指向它)，那么没有相应的删除机制，很可能导致集合所占用的内存只增不减。  单例造成的内存泄漏；  1由于单例的静态特性使得其生命周期跟应用的生命周期一样长，所以如果使用不恰当的话，很容易造成内">
 
 
 
@@ -134,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="https://youngtr.github.io/2017/10/16/Work-Record/"/>
+  <link rel="canonical" href="https://youngtr.github.io/2018/10/23/LeakCanary-源码分析/"/>
 
 
 
 
 
-  <title>工作记录 | YoungTr</title>
+  <title>LeakCanary 源码分析 | YoungTr</title>
   
 
 
@@ -273,7 +273,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://youngtr.github.io/2017/10/16/Work-Record/">
+    <link itemprop="mainEntityOfPage" href="https://youngtr.github.io/2018/10/23/LeakCanary-源码分析/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="YoungTr">
@@ -290,7 +290,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">工作记录</h1>
+          <h1 class="post-title" itemprop="name headline">LeakCanary 源码分析</h1>
         
 
         <div class="post-meta">
@@ -302,8 +302,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-16T17:34:22+08:00">
-                2017-10-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-23T15:45:26+08:00">
+                2018-10-23
               </time>
             
 
@@ -325,8 +325,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/工作记录/" itemprop="url" rel="index">
-                    <span itemprop="name">工作记录</span>
+                  <a href="/categories/开源框架/" itemprop="url" rel="index">
+                    <span itemprop="name">开源框架</span>
                   </a>
                 </span>
 
@@ -362,11 +362,26 @@
       
 
       
-        <h3 id="1-android-在-Html-fromHtml-中的换行被忽略"><a href="#1-android-在-Html-fromHtml-中的换行被忽略" class="headerlink" title="1. [android]在 Html.fromHtml 中的换行被忽略"></a>1. [android]在 Html.fromHtml 中的换行被忽略</h3><p>使用”&lt;br&gt;”标签</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;font size=&quot;3&quot; color=&quot;black&quot;&gt;&quot; + message + &quot;&lt;/font&gt;&lt;br&gt;</div></pre></td></tr></table></figure>
-<h3 id="2-Android使用HttpURLConnection编程遇到的302重定向问题"><a href="#2-Android使用HttpURLConnection编程遇到的302重定向问题" class="headerlink" title="2. Android使用HttpURLConnection编程遇到的302重定向问题"></a>2. Android使用HttpURLConnection编程遇到的302重定向问题</h3><p>接管重定向过程，直接调用HttpURLConnection的setInstanceFollowRedirects(false)，传入参数为false，然后递归的方式进行http请求，然后从header参数中取出location字段。</p>
-<p><a href="http://vjson.com/wordpress/android%E8%8E%B7%E5%8F%96url%E9%87%8D%E5%AE%9A%E5%90%91%E4%B9%8B%E5%90%8E%E7%9A%84%E5%9C%B0%E5%9D%80.html" title="获取url重定向之后的地址" target="_blank" rel="external">获取url重定向之后的地址</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line">public String recursiveTracePath(String path, String reffer) &#123;</div><div class="line">	String realURL = null;</div><div class="line">	if (mStackDeep.getAndDecrement() &gt; 0) &#123;// 避免异常递归导致StackOverflowError</div><div class="line">		URL url = null;</div><div class="line">		HttpURLConnection conn = null;</div><div class="line">		try &#123;</div><div class="line">			url = new URL(path);</div><div class="line">			conn = (HttpURLConnection) url.openConnection();</div><div class="line"></div><div class="line">			conn.setRequestProperty(&quot;User-Agent&quot;, DEFAULT_USER_AGENT_PHONE);</div><div class="line">			conn.setConnectTimeout(30000);</div><div class="line">			conn.setReadTimeout(30000);</div><div class="line">			conn.setInstanceFollowRedirects(false);</div><div class="line">			int code = conn.getResponseCode();// network block</div><div class="line">			if (needRedirect(code)) &#123;</div><div class="line">         //临时重定向和永久重定向location的大小写有区分</div><div class="line">				String location = conn.getHeaderField(&quot;Location&quot;);</div><div class="line">				if (location == null) &#123;</div><div class="line">					location = conn.getHeaderField(&quot;location&quot;);</div><div class="line">				&#125;</div><div class="line"></div><div class="line">				if (!(location.startsWith(&quot;http://&quot;) || location</div><div class="line">						.startsWith(&quot;https://&quot;))) &#123;</div><div class="line">         //某些时候会省略host，只返回后面的path，所以需要补全url</div><div class="line">					URL origionUrl = new URL(path);</div><div class="line">					location = origionUrl.getProtocol() + &quot;://&quot;</div><div class="line">							+ origionUrl.getHost() + location;</div><div class="line">				&#125;</div><div class="line"></div><div class="line">				return recursiveTracePath(location, path);</div><div class="line">			&#125; else &#123;</div><div class="line">				// redirect finish.</div><div class="line">				realURL = path;</div><div class="line">			&#125;</div><div class="line"></div><div class="line">		&#125; catch (MalformedURLException e) &#123;</div><div class="line">			Log.w(TAG, &quot;recursiveTracePath MalformedURLException&quot;);</div><div class="line">		&#125; catch (IOException e) &#123;</div><div class="line">			Log.w(TAG, &quot;recursiveTracePath IOException&quot;);</div><div class="line">		&#125; catch (Exception e) &#123;</div><div class="line">			Log.w(TAG, &quot;unknow exception&quot;);</div><div class="line">		&#125; finally &#123;</div><div class="line">			if (conn != null) &#123;</div><div class="line">				conn.disconnect();</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	return realURL;</div><div class="line">&#125;</div><div class="line"></div><div class="line">private boolean needRedirect(int code) &#123;</div><div class="line">	return (code == HttpStatus.SC_MOVED_PERMANENTLY</div><div class="line">			|| code == HttpStatus.SC_MOVED_TEMPORARILY</div><div class="line">			|| code == HttpStatus.SC_SEE_OTHER || code == HttpStatus.SC_TEMPORARY_REDIRECT);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+        <h3 id="1-内存泄漏"><a href="#1-内存泄漏" class="headerlink" title="1. 内存泄漏"></a>1. 内存泄漏</h3><ul>
+<li>集合类泄漏；</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">集合类如果仅仅有添加元素的方法，而没有相应的删除机制，导致内存被占用。如果这个集合类是全局性的变量 (比如类中的静态属性，全局性的 map 等即有静态引用或 final 一直指向它)，那么没有相应的删除机制，很可能导致集合所占用的内存只增不减。</div></pre></td></tr></table></figure>
+<ul>
+<li>单例造成的内存泄漏；</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">由于单例的静态特性使得其生命周期跟应用的生命周期一样长，所以如果使用不恰当的话，很容易造成内存泄漏。比如下面一个典型的例子，</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public class AppManager &#123;</div><div class="line">	private static AppManager instance;</div><div class="line">	private Context context;</div><div class="line">	private AppManager(Context context) &#123;</div><div class="line">		this.context = context;</div><div class="line">	&#125;</div><div class="line">	public static AppManager getInstance(Context context) &#123;</div><div class="line">		if (instance == null) &#123;</div><div class="line">			instance = new AppManager(context);</div><div class="line">		&#125;</div><div class="line">		return instance;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>匿名内部类/非静态内部类创建静态实例被 Activity（context）持有；</li>
+<li>Handler 造成的内存泄漏，退出页面 message 未完成，使用 static handler 或者 activity 弱引用；</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">public class SampleActivity extends Activity &#123;</div><div class="line"></div><div class="line">  /**</div><div class="line">   * Instances of static inner classes do not hold an implicit</div><div class="line">   * reference to their outer class.</div><div class="line">   */</div><div class="line">  private static class MyHandler extends Handler &#123;</div><div class="line">    private final WeakReference&lt;SampleActivity&gt; mActivity;</div><div class="line"></div><div class="line">    public MyHandler(SampleActivity activity) &#123;</div><div class="line">      mActivity = new WeakReference&lt;SampleActivity&gt;(activity);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void handleMessage(Message msg) &#123;</div><div class="line">      SampleActivity activity = mActivity.get();</div><div class="line">      if (activity != null) &#123;</div><div class="line">        // ...</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  private final MyHandler mHandler = new MyHandler(this);</div><div class="line"></div><div class="line">  /**</div><div class="line">   * Instances of anonymous classes do not hold an implicit</div><div class="line">   * reference to their outer class when they are &quot;static&quot;.</div><div class="line">   */</div><div class="line">  private static final Runnable sRunnable = new Runnable() &#123;</div><div class="line">      @Override</div><div class="line">      public void run() &#123; /* ... */ &#125;</div><div class="line">  &#125;;</div><div class="line"></div><div class="line">  @Override</div><div class="line">  protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">    super.onCreate(savedInstanceState);</div><div class="line"></div><div class="line">    // Post a message and delay its execution for 10 minutes.</div><div class="line">    mHandler.postDelayed(sRunnable, 1000 * 60 * 10);</div><div class="line">    </div><div class="line">    // Go back to the previous Activity.</div><div class="line">    finish();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>线程造成内存泄漏，页面退出任务未结束；</li>
+<li>WebView 造成内存泄漏，可以在单独进程中运行，退出之后直接 kill process；</li>
+</ul>
+<h3 id="2-引用类型"><a href="#2-引用类型" class="headerlink" title="2. 引用类型"></a>2. 引用类型</h3><p><a href="https://youngtr.github.io/2017/11/07/java-refrence/">Java的引用-StrongReference、WeakReference、SoftRefrence</a></p>
+
       
     </div>
     
@@ -383,7 +398,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/工作记录/" rel="tag"># 工作记录</a>
+            <a href="/tags/开源框架/" rel="tag"># 开源框架</a>
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
           
         </div>
       
@@ -396,8 +413,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/10/16/template-method/" rel="next" title="模板方法">
-                <i class="fa fa-chevron-left"></i> 模板方法
+              <a href="/2018/10/19/学习建议相关/" rel="next" title="学习建议相关">
+                <i class="fa fa-chevron-left"></i> 学习建议相关
               </a>
             
           </div>
@@ -405,10 +422,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/10/17/proxy-pattern/" rel="prev" title="代理模式">
-                代理模式 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -542,7 +555,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-android-在-Html-fromHtml-中的换行被忽略"><span class="nav-number">1.</span> <span class="nav-text">1. [android]在 Html.fromHtml 中的换行被忽略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Android使用HttpURLConnection编程遇到的302重定向问题"><span class="nav-number">2.</span> <span class="nav-text">2. Android使用HttpURLConnection编程遇到的302重定向问题</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-内存泄漏"><span class="nav-number">1.</span> <span class="nav-text">1. 内存泄漏</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-引用类型"><span class="nav-number">2.</span> <span class="nav-text">2. 引用类型</span></a></li></ol></div>
             
 
           </div>
