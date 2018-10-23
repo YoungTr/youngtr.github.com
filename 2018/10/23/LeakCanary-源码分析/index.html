@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="1. 内存泄漏 集合类泄漏；  1集合类如果仅仅有添加元素的方法，而没有相应的删除机制，导致内存被占用。如果这个集合类是全局性的变量 (比如类中的静态属性，全局性的 map 等即有静态引用或 final 一直指向它)，那么没有相应的删除机制，很可能导致集合所占用的内存只增不减。  单例造成的内存泄漏；  1由于单例的静态特性使得其生命周期跟应用的生命周期一样长，所以如果使用不恰当的话，很容易造成内">
+<meta name="description" content="1. 内存泄漏 集合类泄漏；  123集合类如果仅仅有添加元素的方法，而没有相应的删除机制，导致内存被占用。如果这个集合类是全局性的变量 (比如类中的静态属性，全局性的 map 等即有静态引用或 final 一直指向它)，那么没有相应的删除机制，很可能导致集合所占用的内存只增不减。  单例造成的内存泄漏；  1由于单例的静态特性使得其生命周期跟应用的生命周期一样长，所以如果使用不恰当的话，很容易造">
 <meta name="keywords" content="开源框架,Android">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeakCanary 源码分析">
 <meta property="og:url" content="https://youngtr.github.io/2018/10/23/LeakCanary-源码分析/index.html">
 <meta property="og:site_name" content="YoungTr">
-<meta property="og:description" content="1. 内存泄漏 集合类泄漏；  1集合类如果仅仅有添加元素的方法，而没有相应的删除机制，导致内存被占用。如果这个集合类是全局性的变量 (比如类中的静态属性，全局性的 map 等即有静态引用或 final 一直指向它)，那么没有相应的删除机制，很可能导致集合所占用的内存只增不减。  单例造成的内存泄漏；  1由于单例的静态特性使得其生命周期跟应用的生命周期一样长，所以如果使用不恰当的话，很容易造成内">
+<meta property="og:description" content="1. 内存泄漏 集合类泄漏；  123集合类如果仅仅有添加元素的方法，而没有相应的删除机制，导致内存被占用。如果这个集合类是全局性的变量 (比如类中的静态属性，全局性的 map 等即有静态引用或 final 一直指向它)，那么没有相应的删除机制，很可能导致集合所占用的内存只增不减。  单例造成的内存泄漏；  1由于单例的静态特性使得其生命周期跟应用的生命周期一样长，所以如果使用不恰当的话，很容易造">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-10-23T08:38:19.527Z">
+<meta property="og:updated_time" content="2018-10-23T08:44:22.560Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LeakCanary 源码分析">
-<meta name="twitter:description" content="1. 内存泄漏 集合类泄漏；  1集合类如果仅仅有添加元素的方法，而没有相应的删除机制，导致内存被占用。如果这个集合类是全局性的变量 (比如类中的静态属性，全局性的 map 等即有静态引用或 final 一直指向它)，那么没有相应的删除机制，很可能导致集合所占用的内存只增不减。  单例造成的内存泄漏；  1由于单例的静态特性使得其生命周期跟应用的生命周期一样长，所以如果使用不恰当的话，很容易造成内">
+<meta name="twitter:description" content="1. 内存泄漏 集合类泄漏；  123集合类如果仅仅有添加元素的方法，而没有相应的删除机制，导致内存被占用。如果这个集合类是全局性的变量 (比如类中的静态属性，全局性的 map 等即有静态引用或 final 一直指向它)，那么没有相应的删除机制，很可能导致集合所占用的内存只增不减。  单例造成的内存泄漏；  1由于单例的静态特性使得其生命周期跟应用的生命周期一样长，所以如果使用不恰当的话，很容易造">
 
 
 
@@ -365,7 +365,7 @@
         <h3 id="1-内存泄漏"><a href="#1-内存泄漏" class="headerlink" title="1. 内存泄漏"></a>1. 内存泄漏</h3><ul>
 <li>集合类泄漏；</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">集合类如果仅仅有添加元素的方法，而没有相应的删除机制，导致内存被占用。如果这个集合类是全局性的变量 (比如类中的静态属性，全局性的 map 等即有静态引用或 final 一直指向它)，那么没有相应的删除机制，很可能导致集合所占用的内存只增不减。</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">集合类如果仅仅有添加元素的方法，而没有相应的删除机制，导致内存被占用。</div><div class="line">如果这个集合类是全局性的变量 (比如类中的静态属性，全局性的 map 等即有静态引用或 final 一直指向它)，</div><div class="line">那么没有相应的删除机制，很可能导致集合所占用的内存只增不减。</div></pre></td></tr></table></figure>
 <ul>
 <li>单例造成的内存泄漏；</li>
 </ul>
